@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">LottoNumber</string>
+    <!-- main -->
+    <string name="main_title">로또 번호 생성기</string>
+    <string name="main_btn_addNum">번호 추가하기</string>
+    <string name="main_btn_reset">초기화</string>
+    <string name="main_btn_start">자동 생성 시작</string>
 </resources>
