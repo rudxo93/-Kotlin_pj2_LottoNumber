@@ -1,1 +1,1 @@
-# -Kotlin_pj2_LottoNumber
+# Kotlin_pj2_LottoNumber
