@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_reset)
     }
 
-    private val btnAddNym : Button by lazy {
+    private val btnAddNum : Button by lazy {
         findViewById<Button>(R.id.btn_addNum)
     }
 
@@ -53,7 +54,44 @@ class MainActivity : AppCompatActivity() {
         numberPicker.maxValue = 45
 
         initStartButton() // 자동 생성 시작 함수
+        initAddButton() // 번호 추가하기 버튼 함수
     }
+
+    // 번호 추가하기 버튼 초기화하기
+    private fun initAddButton() {
+        btnAddNum.setOnClickListener {
+
+            // 이미 자동생성버튼을 누른경우 번호가 추가되면 안되기 때문에 -> 초기화 후에 번호를 선택할 수 있게
+            if(didRun){
+                Toast.makeText(this, "초기화 후에 시도해주세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 최대 5개까지만 번호를 선택
+            if(pickNumberSet.size >= 5) {
+                Toast.makeText(this, "번호는 5개까지만 선택할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 중복으로 번호를 선택하지 못하게
+            if (pickNumberSet.contains(numberPicker.value)) {
+                Toast.makeText(this, "이미 선택한 번호입니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val textView = numberTextViewList[pickNumberSet.size] // 다음으로 추가될 텍스트뷰
+            textView.isVisible = true
+            textView.text = numberPicker.value.toString()
+
+            // 코틀린이라 setBackground 사용 말고 이렇게 사용가능
+            // drawable 이 안드로이드 앱에 저장되는 것이기 때문에 Context에서 가져오는 것이 필요
+            textView.background = ContextCompat.getDrawable(this, R.drawable.circle_blue)
+
+            setNumberBackground(numberPicker.value, textView) // 번호에 맞는 공색깔을 set해준다.
+
+            pickNumberSet.add(numberPicker.value) // 선택한 번호 set에 추가
+        }
+   }
 
     // 자동 생성 시작 버튼 초기화하기
     private fun initStartButton() {
