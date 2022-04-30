@@ -55,6 +55,18 @@ class MainActivity : AppCompatActivity() {
 
         initStartButton() // 자동 생성 시작 함수
         initAddButton() // 번호 추가하기 버튼 함수
+        initResetButton() // Reset 버튼 함수
+    }
+
+    // Reset 버튼 클릭 초기화하기
+    private fun initResetButton() {
+        btnReset.setOnClickListener {
+            pickNumberSet.clear()
+            numberTextViewList.forEach {
+                it.isVisible = false
+            }
+            didRun = false
+        }
     }
 
     // 번호 추가하기 버튼 초기화하기
